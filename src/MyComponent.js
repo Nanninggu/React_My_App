@@ -1,15 +1,24 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 function MyComponent() {
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    fetch("http://localhost:8080/users/1")
+      .then((response) => response.json())
+      .then((data) => setUser(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
   return (
     <Box>
-      <Div>테스트 페이지</Div>
+      <Div>Test Page</Div>
       <Div2 />
-      <Div3>Spring Dto</Div3>
-      <Div4>Spring Dto</Div4>
-      <Div5>Spring Dto</Div5>
-      <Div6>Spring Dto</Div6>
+      <Div3>ID: {user.id}</Div3>
+      <Div4>Username: {user.username}</Div4>
+      <Div5>Email: {user.email}</Div5>
+      <Div6>State: {user.state}</Div6>
     </Box>
   );
 }
@@ -82,6 +91,5 @@ const Div6 = styled.div`
     margin-left: 10px;
   }
 `;
-
 
 export default MyComponent;
